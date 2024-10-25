@@ -1,0 +1,128 @@
+local Players = game:GetService("Players")
+
+
+local function hasOutline(character)
+
+    for _, part in ipairs(character:GetDescendants()) do
+
+        if part:IsA("SelectionBox") then
+
+            return true -- Player already has an outline
+
+        end
+
+    end
+
+    return false
+
+end
+
+
+local function applyOutline(character)
+
+    if hasOutline(character) then
+
+        return -- Player already has an outline, do nothing
+
+    end
+
+
+    for _, part in ipairs(character:GetDescendants()) do
+
+        if part:IsA("BasePart") then
+
+            local outline = Instance.new("SelectionBox")
+
+            outline.Adornee = part
+
+            outline.Color3 = Color3.fromRGB(255, 0, 0) -- Red outline color
+
+            outline.LineThickness = 0.05 -- Adjust line thickness to your preference
+
+            outline.SurfaceTransparency = 0.7 -- Adjust transparency to your preference (0 = opaque, 1 = fully transparent)
+
+            outline.Parent = part
+
+        end
+
+    end
+
+end
+
+
+local function removeOutline(character)
+
+    for _, part in ipairs(character:GetDescendants()) do
+
+        if part:IsA("SelectionBox") then
+
+            part:Destroy()
+
+        end
+
+    end
+
+end
+
+
+local function outlineAllCharacters()
+
+    for _, player in ipairs(Players:GetPlayers()) do
+
+        local character = player.Character
+
+        if character then
+
+            applyOutline(character)
+
+        end
+
+    end
+
+end
+
+
+local function onPlayerAdded(player)
+
+    player.CharacterAdded:Connect(function(character)
+
+        applyOutline(character)
+
+    end)
+
+end
+
+
+local function onPlayerRemoving(player)
+
+    local character = player.Character
+
+    if character then
+
+        removeOutline(character)
+
+    end
+
+end
+
+
+-- Continuously update outlines
+
+while true do
+
+    outlineAllCharacters()
+
+    wait(1) -- Wait for 1 second before updating outlines again
+
+end
+
+
+Players.PlayerAdded:Connect(onPlayerAdded)
+
+Players.PlayerRemoving:Connect(onPlayerRemoving)
+
+
+-- Call outline function when the script starts
+
+outlineAllCharacters()
+
