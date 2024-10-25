@@ -9,7 +9,7 @@ local function hasOutline(character)
 
             return true -- Player already has an outline
 
-        end
+       end
 
     end
 
