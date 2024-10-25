@@ -1,37 +1,4 @@
--- Stable version of NeonAura (billgui+checker+team+health+distance) with dynamic StudsOffset, adjusted size, white background, black text color, and spacing between text labels
-
-
-local localPlayer = game.Players.LocalPlayer
-
-
-local function calculateDistance(player)
-
-    local playerPos = player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player.Character.HumanoidRootPart.Position
-
-    local localPlayerPos = localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") and localPlayer.Character.HumanoidRootPart.Position
-
-
-    if playerPos and localPlayerPos then
-
-        return (playerPos - localPlayerPos).Magnitude
-
-    else
-
-        return nil
-
-    end
-
-end
-
-
-local function createBillboardGui(player)
-
-    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-
-        local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
-
-
-        -- Check if player already has a BillboardGui
+         -- Check if player already has a BillboardGui
 
         local existingBillboardGui = humanoidRootPart:FindFirstChildOfClass("BillboardGui")
 
